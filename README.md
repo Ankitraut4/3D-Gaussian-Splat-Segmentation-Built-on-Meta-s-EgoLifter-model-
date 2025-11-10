@@ -1,11 +1,10 @@
 # About
 
-This project is a fork of [EgoLifter](https://github.com/facebookresearch/egolifter). It contains some additional experiments. 
-
 This project revisits **EgoLifter** (Meta, 2024), a method that lifts 2D instance masks into 3D by learning a per-Gaussian embedding within a **3D Gaussian Splatting (3DGS)** scene. While the original EgoLifter uses **SAM (Segment Anything Model)** to generate *per-frame segmentation masks*, we extend the pipeline to use **SAM2**, which provides **temporally-consistent video object masks**, improving the contrastive learning signal and cluster stability.
 
 We additionally experiment with injecting **native 3DGS attributes** (position, scale, opacity) into a lightweight **MLP-based embedding network** to evaluate whether geometric cues can strengthen 3D segment separation.
 
+Note:- This project is a fork of [EgoLifter](https://github.com/facebookresearch/egolifter). It contains some additional experiments. 
 ---
 
 ## 🔄 Key Enhancements Over Original EgoLifter
