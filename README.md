@@ -2,6 +2,48 @@
 
 This project is a fork of [EgoLifter](https://github.com/facebookresearch/egolifter). It contains some additional experiments. 
 
+This project revisits **EgoLifter** (Meta, 2024), a method that lifts 2D instance masks into 3D by learning a per-Gaussian embedding within a **3D Gaussian Splatting (3DGS)** scene. While the original EgoLifter uses **SAM (Segment Anything Model)** to generate *per-frame segmentation masks*, we extend the pipeline to use **SAM2**, which provides **temporally-consistent video object masks**, improving the contrastive learning signal and cluster stability.
+
+We additionally experiment with injecting **native 3DGS attributes** (position, scale, opacity) into a lightweight **MLP-based embedding network** to evaluate whether geometric cues can strengthen 3D segment separation.
+
+---
+
+## 🔄 Key Enhancements Over Original EgoLifter
+
+| Component | EgoLifter Baseline | **Our Modification** |
+|---------|------------------|----------------------|
+| Mask Source | **SAM (frame-by-frame)** | **SAM2 Video Segmentation** ✅ |
+| Embedding | 16-D learned feature | **MLP(3DGS attributes → embedding)** |
+| Signal Coherence | Discontinuous across frames | **Stable object identity over time** ✅ |
+| Result | Some cluster leakage | **Improved motion-object consistency** ✅ |
+
+
+---
+
+## 📊 Results Summary
+
+| Model | PSNR (10k steps) | Temporal Mask Stability | Cluster Separation |
+|-------|------------------|------------------------|-------------------|
+| EgoLifter (SAM) | ≈ 25 dB | ❌ Weak | Moderate |
+| **Ours (SAM2 + Attribute-MLP)** | **≈ 25 dB** ✅ | **Stronger** ✅ | Slight improvement |
+
+### ✅ Positive Outcomes
+- Photometric rendering **remains stable and high quality**
+- SAM2 **significantly improves temporal consistency**
+- Training becomes **more stable with cleaner positive/negative contrast pairs**
+- The work clarifies **which design direction is not effective**, guiding future improvements
+
+---
+
+## 📂 Required Dataset
+
+This project uses the **Project Aria Digital Twin (ADT)** dataset:
+
+- https://explorer.projectaria.com/adt
+
+We use sequence:
+Apartment_release_work_skeleton_seq131_M1292
+
 # Setup 
 
 ## Install dependencies 
